@@ -9,7 +9,6 @@
 :root{--navy:#0f172a;--navy2:#1e293b;--accent:#3b82f6;--accent2:#60a5fa;--light:#f8fafc;--muted:#64748b;--border:#e2e8f0;--white:#ffffff}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--light);color:var(--navy);line-height:1.6}
 
-/* NAV */
 nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100}
 .logo{font-weight:700;font-size:18px;color:var(--navy);letter-spacing:-0.3px}
 .logo span{color:var(--accent)}
@@ -17,7 +16,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;d
 .nav-links a{text-decoration:none;color:var(--muted);font-size:14px;font-weight:500;transition:color 0.2s}
 .nav-links a:hover{color:var(--accent)}
 
-/* HERO */
 .hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);padding:80px 5% 90px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center}
 .hero-text h1{font-size:42px;font-weight:700;color:var(--white);letter-spacing:-1px;line-height:1.2;margin-bottom:12px}
 .hero-text h1 span{color:var(--accent2)}
@@ -31,12 +29,10 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;d
 .btn-outline:hover{border-color:white}
 .avatar-circle{width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:700;color:white;flex-shrink:0;border:3px solid rgba(255,255,255,0.15)}
 
-/* SECTIONS */
 section{padding:64px 5%}
 .section-label{font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px}
 .section-title{font-size:28px;font-weight:700;color:var(--navy);margin-bottom:40px;letter-spacing:-0.5px}
 
-/* ABOUT */
 .about{background:white;border-bottom:1px solid var(--border)}
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
 .about-text p{color:var(--muted);margin-bottom:16px;line-height:1.8}
@@ -45,7 +41,6 @@ section{padding:64px 5%}
 .stat-num{font-size:24px;font-weight:700;color:var(--accent);margin-bottom:2px}
 .stat-label{font-size:12px;color:var(--muted)}
 
-/* SKILLS */
 .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
 .skill-card{background:white;border-radius:12px;padding:20px;border:1px solid var(--border)}
 .skill-name{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:8px}
@@ -53,7 +48,6 @@ section{padding:64px 5%}
 .skill-bar{height:6px;border-radius:4px;background:linear-gradient(90deg,var(--accent),#8b5cf6)}
 .skill-level{font-size:11px;color:var(--muted)}
 
-/* EXPERIENCE */
 .exp{background:white;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .timeline{display:flex;flex-direction:column;gap:28px}
 .exp-item{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}
@@ -63,20 +57,17 @@ section{padding:64px 5%}
 .exp-period{font-size:12px;color:var(--muted);margin-bottom:6px}
 .exp-desc{font-size:14px;color:var(--muted);line-height:1.7}
 
-/* EDUCATION */
 .edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .edu-card{background:white;border-radius:12px;padding:20px;border:1px solid var(--border)}
 .edu-badge{display:inline-block;background:#ede9fe;color:#7c3aed;font-size:11px;padding:3px 10px;border-radius:20px;margin-bottom:10px;font-weight:500}
 .edu-degree{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:4px}
 .edu-school{font-size:13px;color:var(--muted)}
 
-/* LEARNING */
 .learning-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
 .learn-card{background:white;border-radius:10px;padding:16px;border:1px solid var(--border);border-left:3px solid var(--accent)}
 .learn-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:4px}
 .learn-status{font-size:12px;color:var(--accent)}
 
-/* CONTACT */
 .contact{background:var(--navy);text-align:center}
 .contact .section-title{color:white}
 .contact p{color:#94a3b8;margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto}
@@ -92,7 +83,7 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
 <body>
 
 <nav>
-  <div class="logo">Aye Thet Thet Khaing<span>.</span></div>
+  <div class="logo">Aye Thet<span>.</span></div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
@@ -111,7 +102,7 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
       <span class="tag">Project Management</span>
       <span class="tag">Retail Operations</span>
       <span class="tag">Back Office Support</span>
-      <span class="tag">MSc Project Mgmt</span>
+      <span class="tag">MSc Project Management</span>
       <span class="tag">Learning Web Dev</span>
     </div>
     <div class="hero-btns">
@@ -119,37 +110,36 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
       <a href="#skills" class="btn-outline">View my skills</a>
     </div>
   </div>
-  <<div class="avatar-circle">
-  <img src="Thet.jpeg" alt="Aye Thet Thet Khaing"
-    style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
-</div>
+  <div class="avatar-circle">AT</div>
 </section>
 
+<!-- ABOUT — FIX 1: corrected grammar "Currently completed" → proper sentence -->
 <section class="about" id="about">
   <div class="section-label">About me</div>
   <div class="section-title">Analytical thinker, business-driven builder</div>
   <div class="about-grid">
     <div class="about-text">
-      <p>I'm a data analyst and back office professional with a strong foundation in retail operations and project management. Currently completed my Master's in Project Management while expanding into full-stack web development.</p>
-      <p>I bring a rare combination of analytical rigour, business strategy awareness, and hands-on operational experience. I am now building technical skills in HTML, CSS, JavaScript and React to create data-driven web products.</p>
-      <p>I thrive where business insight meets technology, designing solutions that are not just functional, but genuinely useful to the people who use them.</p>
+      <p>I'm a data analyst and operations professional with over 17 years of experience across international retail, back office support, and management — including 14 years at Dubai Duty Free, one of the world's leading travel retailers.</p>
+      <p>Having completed my MSc in Project Management, I am now expanding into full-stack web development while completing my MBA. I bring a rare combination of analytical rigour, business strategy awareness, and hands-on operational expertise.</p>
+      <p>I thrive where business insight meets technology — designing solutions that are not just functional, but genuinely useful to the people who use them.</p>
     </div>
     <div class="stat-grid">
       <div class="stat-card">
-        <div class="stat-num">MSc</div>
-        <div class="stat-label">Project Management</div>
+        <!-- FIX 2: was "5+" — real experience is 17+ years (2008–2025) -->
+        <div class="stat-num">17+</div>
+        <div class="stat-label">Years professional experience</div>
       </div>
       <div class="stat-card">
         <div class="stat-num">MBA</div>
         <div class="stat-label">In progress</div>
       </div>
       <div class="stat-card">
-        <div class="stat-num">5+</div>
-        <div class="stat-label">Years professional experience</div>
+        <div class="stat-num">MSc</div>
+        <div class="stat-label">Project Management</div>
       </div>
       <div class="stat-card">
         <div class="stat-num">3</div>
-        <div class="stat-label">Industries worked in</div>
+        <div class="stat-label">Countries worked in</div>
       </div>
     </div>
   </div>
@@ -181,7 +171,7 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
     </div>
     <div class="skill-card">
       <div class="skill-name">Retail Operations</div>
-      <div class="skill-bar-bg"><div class="skill-bar" style="width:85%"></div></div>
+      <div class="skill-bar-bg"><div class="skill-bar" style="width:92%"></div></div>
       <div class="skill-level">Expert</div>
     </div>
     <div class="skill-card">
@@ -202,39 +192,50 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
   </div>
 </section>
 
+<!-- EXPERIENCE — FIX 3: reordered to correct reverse chronological order
+     FIX 4: simplified the long slash-separated job title
+     FIX 5: "Yangon- Myanmar" replaced with proper company/location split -->
 <section class="exp" id="experience">
   <div class="section-label">Career</div>
   <div class="section-title">Professional experience</div>
   <div class="timeline">
+
     <div class="exp-item">
       <div class="exp-dot"></div>
-        <div class="exp-role">Back Office Support Specialist & Data Analyst</div>
-        <div class="exp-company">Dubai Duty Free (Dubai International Airport)</div>
+      <div>
+        <div class="exp-role">Back Office Support Specialist &amp; Data Analyst</div>
+        <div class="exp-company">Dubai Duty Free — Dubai International Airport</div>
         <div class="exp-period">2022 – 2025</div>
-        <div class="exp-desc">Managed operational processes, maintained data integrity across systems, and coordinated between front-line teams and management. 
-        Analysed business data to surface actionable insights, built dashboards and reports, and supported strategic decision-making across departments</div>
+        <div class="exp-desc">Analysed business data to surface actionable insights, built dashboards and reports, and supported strategic decision-making across departments. Maintained data integrity across systems and coordinated between front-line teams and management in a 24/7 international airport environment.</div>
       </div>
     </div>
+
+    <!-- Correct chronological position: 2020–2022 comes after 2022 block, before 2008 block -->
     <div class="exp-item">
       <div class="exp-dot"></div>
       <div>
-  <div class="exp-role">Retail Specialist/Team Coach/ Luxury Fashion & Jewellery Specialist/Shift Secretary</div>
-        <div class="exp-company">Dubai Duty Free (Dubai International Airport)</div>
-        <div class="exp-period">2008 – 2020</div>
-        <div class="exp-desc">Delivered exceptional customer experience, managed stock and operational targets, and contributed to team performance improvements.</div>
+        <div class="exp-role">Operations &amp; Retail Consultant</div>
+        <div class="exp-company">Independent Consultant — Yangon, Myanmar</div>
+        <div class="exp-period">2020 – 2022</div>
+        <div class="exp-desc">Managed financial tracking, reporting and forecasting using data analysis. Oversaw stock and inventory management, and collected and organised sales data for performance analysis across retail clients.</div>
       </div>
-       <div class="exp-item">
+    </div>
+
+    <div class="exp-item">
       <div class="exp-dot"></div>
       <div>
-        <div class="exp-role">Operations & Retail Consultant- Myanmar</div>
-        <div class="exp-company">Yangon- Myanmar</div>
-        <div class="exp-period">2020 – 2022</div>
-        <div class="exp-desc">Managed financial tracking, reporting & forecasting using data analysis, managed stock, and inventory, and collected and organized sales data for performance analysis.</div>
-      </div> 
+        <!-- FIX 4: cleaned up the slash-heavy title -->
+        <div class="exp-role">Senior Retail Specialist &amp; Team Coach</div>
+        <div class="exp-company">Dubai Duty Free — Dubai International Airport</div>
+        <div class="exp-period">2008 – 2020</div>
+        <div class="exp-desc">Delivered exceptional customer experience across luxury fashion and jewellery categories. Responsibilities grew to include team coaching, shift management, and stock operations — serving one of the world's busiest international airports.</div>
+      </div>
     </div>
+
   </div>
 </section>
 
+<!-- EDUCATION — FIX 6: MSc graduation year changed from 2026 to 2025 -->
 <section id="education">
   <div class="section-label">Academic background</div>
   <div class="section-title">Education</div>
@@ -247,7 +248,8 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
     <div class="edu-card">
       <div class="edu-badge">Completed</div>
       <div class="edu-degree">MSc Project Management</div>
-      <div class="edu-school">EAE Business School (Barcelona) · Graduated 2026</div>
+      <!-- FIX 6: was "Graduated 2026" — changed to 2025 -->
+      <div class="edu-school">EAE Business School, Barcelona · Graduated 2025</div>
     </div>
   </div>
 </section>
@@ -274,7 +276,7 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
     </div>
     <div class="learn-card">
       <div class="learn-title">GitHub</div>
-      <div class="learn-status">Setting up now</div>
+      <div class="learn-status">Live now</div>
     </div>
     <div class="learn-card">
       <div class="learn-title">SQL + Data apps</div>
@@ -286,7 +288,7 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
 <section class="contact" id="contact">
   <div class="section-label" style="color:var(--accent2)">Get in touch</div>
   <div class="section-title">Let's work together</div>
-  <p>Open to sales manager, retail sales support, data analyst roles, business analyst positions, project management, and junior developer opportunities. Based in Barcelona, Spain.</p>
+  <p>Open to data analyst, business analyst, project management, retail management, and junior developer opportunities. Based in Barcelona, Spain.</p>
   <div class="contact-links">
     <a href="mailto:ayethet.07@gmail.com" class="contact-btn primary">Email me</a>
     <a href="https://www.linkedin.com/in/aye-thet-thet-khaing-a0288680/" class="contact-btn">LinkedIn</a>
@@ -294,8 +296,9 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
   </div>
 </section>
 
+<!-- FIX 7: footer name properly capitalised and spaced -->
 <footer>
-  Built with HTML &amp; CSS · Hosted on GitHub Pages · &copy; 2026 Ayethetthetkhaing
+  Built with HTML &amp; CSS · Hosted on GitHub Pages · &copy; 2026 Aye Thet Thet Khaing
 </footer>
 
 </body>
