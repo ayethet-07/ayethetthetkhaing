@@ -8,14 +8,12 @@
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--navy:#0f172a;--navy2:#1e293b;--accent:#3b82f6;--accent2:#60a5fa;--light:#f8fafc;--muted:#64748b;--border:#e2e8f0;--white:#ffffff}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--light);color:var(--navy);line-height:1.6}
-
 nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100}
 .logo{font-weight:700;font-size:18px;color:var(--navy);letter-spacing:-0.3px}
 .logo span{color:var(--accent)}
 .nav-links{display:flex;gap:28px;list-style:none}
 .nav-links a{text-decoration:none;color:var(--muted);font-size:14px;font-weight:500;transition:color 0.2s}
 .nav-links a:hover{color:var(--accent)}
-
 .hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);padding:80px 5% 90px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center}
 .hero-text h1{font-size:42px;font-weight:700;color:var(--white);letter-spacing:-1px;line-height:1.2;margin-bottom:12px}
 .hero-text h1 span{color:var(--accent2)}
@@ -28,11 +26,9 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;d
 .btn-outline{background:transparent;color:white;padding:11px 24px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:500;border:1px solid rgba(255,255,255,0.3);transition:border-color 0.2s}
 .btn-outline:hover{border-color:white}
 .avatar-circle{width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:700;color:white;flex-shrink:0;border:3px solid rgba(255,255,255,0.15)}
-
 section{padding:64px 5%}
 .section-label{font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px}
 .section-title{font-size:28px;font-weight:700;color:var(--navy);margin-bottom:40px;letter-spacing:-0.5px}
-
 .about{background:white;border-bottom:1px solid var(--border)}
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
 .about-text p{color:var(--muted);margin-bottom:16px;line-height:1.8}
@@ -40,14 +36,12 @@ section{padding:64px 5%}
 .stat-card{background:var(--light);border-radius:10px;padding:16px;border:1px solid var(--border)}
 .stat-num{font-size:24px;font-weight:700;color:var(--accent);margin-bottom:2px}
 .stat-label{font-size:12px;color:var(--muted)}
-
 .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
 .skill-card{background:white;border-radius:12px;padding:20px;border:1px solid var(--border)}
 .skill-name{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:8px}
 .skill-bar-bg{background:var(--border);border-radius:4px;height:6px;margin-bottom:6px;overflow:hidden}
-.skill-bar{height:6px;border-radius:4px;background:linear-gradient(90deg,var(--accent),#8b5cf6)}
+.skill-bar{height:6px;border-radius:4px;background:linear-gradient(90deg,var(--accent),#8b5cf6);transition:width 1.2s ease}
 .skill-level{font-size:11px;color:var(--muted)}
-
 .exp{background:white;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .timeline{display:flex;flex-direction:column;gap:28px}
 .exp-item{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}
@@ -56,18 +50,15 @@ section{padding:64px 5%}
 .exp-company{font-size:14px;color:var(--accent);font-weight:500}
 .exp-period{font-size:12px;color:var(--muted);margin-bottom:6px}
 .exp-desc{font-size:14px;color:var(--muted);line-height:1.7}
-
 .edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .edu-card{background:white;border-radius:12px;padding:20px;border:1px solid var(--border)}
 .edu-badge{display:inline-block;background:#ede9fe;color:#7c3aed;font-size:11px;padding:3px 10px;border-radius:20px;margin-bottom:10px;font-weight:500}
 .edu-degree{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:4px}
 .edu-school{font-size:13px;color:var(--muted)}
-
 .learning-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
 .learn-card{background:white;border-radius:10px;padding:16px;border:1px solid var(--border);border-left:3px solid var(--accent)}
 .learn-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:4px}
 .learn-status{font-size:12px;color:var(--accent)}
-
 .contact{background:var(--navy);text-align:center}
 .contact .section-title{color:white}
 .contact p{color:#94a3b8;margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto}
@@ -76,8 +67,19 @@ section{padding:64px 5%}
 .contact-btn:hover{background:rgba(255,255,255,0.1)}
 .contact-btn.primary{background:var(--accent);border-color:var(--accent)}
 .contact-btn.primary:hover{background:#2563eb}
-
 footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#475569}
+
+/* RESPONSIVE — mobile friendly */
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr;padding:50px 6% 60px}
+  .avatar-circle{width:90px;height:90px;font-size:28px;justify-self:start}
+  .hero-text h1{font-size:28px}
+  .hero-tagline{font-size:15px}
+  .about-grid{grid-template-columns:1fr}
+  .edu-grid{grid-template-columns:1fr}
+  .nav-links{gap:16px}
+  .section-title{font-size:22px}
+}
 </style>
 </head>
 <body>
@@ -96,7 +98,7 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
 <section class="hero">
   <div class="hero-text">
     <h1>Hi, I'm <span>Aye Thet Thet Khaing</span></h1>
-    <p class="hero-tagline">Data Analyst · MBA Student · Aspiring Full-Stack Developer</p>
+    <p class="hero-tagline">Data Analyst · Sales Support Specialist · Aspiring Full-Stack Developer</p>
     <div class="hero-tags">
       <span class="tag">Data Analysis</span>
       <span class="tag">Project Management</span>
@@ -116,7 +118,6 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
 </div>
 </section>
 
-<!-- ABOUT — FIX 1: corrected grammar "Currently completed" → proper sentence -->
 <section class="about" id="about">
   <div class="section-label">About me</div>
   <div class="section-title">Analytical thinker, business-driven builder</div>
@@ -124,11 +125,10 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
     <div class="about-text">
       <p>I'm a data analyst and operations professional with over 17 years of experience across international retail, back office support, and management — including 14 years at Dubai Duty Free, one of the world's leading travel retailers.</p>
       <p>Having completed my MSc in Project Management, I am now expanding into full-stack web development while completing my MBA. I bring a rare combination of analytical rigour, business strategy awareness, and hands-on operational expertise.</p>
-      <p>I thrive where business insight meets technology — designing solutions that are not just functional, but genuinely useful to the people who use them.</p>
+      <p>I thrive where business insight meets technology, designing solutions that are not just functional, but genuinely useful to the people who use them.</p>
     </div>
     <div class="stat-grid">
       <div class="stat-card">
-        <!-- FIX 2: was "5+" — real experience is 17+ years (2008–2025) -->
         <div class="stat-num">17+</div>
         <div class="stat-label">Years professional experience</div>
       </div>
@@ -195,9 +195,6 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
   </div>
 </section>
 
-<!-- EXPERIENCE — FIX 3: reordered to correct reverse chronological order
-     FIX 4: simplified the long slash-separated job title
-     FIX 5: "Yangon- Myanmar" replaced with proper company/location split -->
 <section class="exp" id="experience">
   <div class="section-label">Career</div>
   <div class="section-title">Professional experience</div>
@@ -209,11 +206,10 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
         <div class="exp-role">Back Office Support Specialist &amp; Data Analyst</div>
         <div class="exp-company">Dubai Duty Free — Dubai International Airport</div>
         <div class="exp-period">2022 – 2025</div>
-        <div class="exp-desc">Analysed business data to surface actionable insights, built dashboards and reports, and supported strategic decision-making across departments. Maintained data integrity across systems and coordinated between front-line teams and management in a 24/7 international airport environment.</div>
+        <div class="exp-desc">Analysed business data to surface actionable insights, built dashboards and reports, and supported strategic decision-making across departments. Maintained data integrity across systems and coordinated between front-line teams and management in a 24/7 international airport environment serving over 90 million annual passengers.</div>
       </div>
     </div>
 
-    <!-- Correct chronological position: 2020–2022 comes after 2022 block, before 2008 block -->
     <div class="exp-item">
       <div class="exp-dot"></div>
       <div>
@@ -227,18 +223,16 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
     <div class="exp-item">
       <div class="exp-dot"></div>
       <div>
-        <!-- FIX 4: cleaned up the slash-heavy title -->
         <div class="exp-role">Senior Retail Specialist &amp; Team Coach</div>
         <div class="exp-company">Dubai Duty Free — Dubai International Airport</div>
         <div class="exp-period">2008 – 2020</div>
-        <div class="exp-desc">Delivered exceptional customer experience across luxury fashion and jewellery categories. Responsibilities grew to include team coaching, shift management, and stock operations — serving one of the world's busiest international airports.</div>
+        <div class="exp-desc">Delivered exceptional customer experience across luxury fashion and jewellery categories over 12 years. Responsibilities grew to include team coaching, shift management, and stock operations — contributing to one of the world's highest-revenue travel retail environments.</div>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- EDUCATION — FIX 6: MSc graduation year changed from 2026 to 2025 -->
 <section id="education">
   <div class="section-label">Academic background</div>
   <div class="section-title">Education</div>
@@ -251,8 +245,7 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
     <div class="edu-card">
       <div class="edu-badge">Completed</div>
       <div class="edu-degree">MSc Project Management</div>
-      <!-- FIX 6: was "Graduated 2026" — changed to 2025 -->
-      <div class="edu-school">EAE Business School, Barcelona · Expected Graduation July 2026</div>
+      <div class="edu-school">EAE Business School, Barcelona · Expected Graduation Jul 2026</div>
     </div>
   </div>
 </section>
@@ -299,10 +292,47 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
   </div>
 </section>
 
-<!-- FIX 7: footer name properly capitalised and spaced -->
 <footer>
   Built with HTML &amp; CSS · Hosted on GitHub Pages · &copy; 2026 Aye Thet Thet Khaing
 </footer>
+
+<script>
+  // Animate skill bars on load
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.skill-bar').forEach(bar => {
+      const w = bar.style.width;
+      bar.style.width = '0%';
+      setTimeout(() => { bar.style.width = w; }, 400);
+    });
+  });
+
+  // Highlight active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    sections.forEach(sec => {
+      const top = sec.offsetTop - 80;
+      const link = document.querySelector(`.nav-links a[href="#${sec.id}"]`);
+      if (link) link.style.color = window.scrollY >= top ? '#3b82f6' : '';
+    });
+  });
+
+  // Fade in sections on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('section').forEach(sec => {
+    sec.style.opacity = '0';
+    sec.style.transform = 'translateY(24px)';
+    sec.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(sec);
+  });
+</script>
 
 </body>
 </html>
