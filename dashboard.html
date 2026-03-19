@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dubai Duty Free — Retail Analytics Dashboard | Aye Thet Thet Khaing</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0f172a;--navy2:#1e293b;--accent:#3b82f6;--accent2:#60a5fa;
+  --light:#f1f5f9;--white:#ffffff;--border:#e2e8f0;--muted:#64748b;
+  --green:#16a34a;--green-bg:#f0fdf4;--red:#dc2626;--red-bg:#fef2f2;
+}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--light);color:var(--navy);min-height:100vh}
+
+/* ── NAV ─────────────────────────────────────────────────────────── */
+nav{background:var(--navy);padding:0 5%;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{color:white;font-weight:700;font-size:15px}
+.nav-brand span{color:var(--accent2)}
+.nav-back{color:#94a3b8;text-decoration:none;font-size:13px;transition:color .2s}
+.nav-back:hover{color:white}
+
+/* ── HEADER ──────────────────────────────────────────────────────── */
+.dash-header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);padding:28px 5% 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.dash-header h1{font-size:22px;font-weight:700;color:white;letter-spacing:-0.5px}
+.dash-header p{color:#94a3b8;font-size:13px;margin-top:4px}
+.filter-group{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.filter-group label{color:#94a3b8;font-size:12px;font-weight:500}
+.filter-group select{padding:7px 12px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:white;font-size:13px;outline:none;cursor:pointer}
+.filter-group select:hover{border-color:var(--accent)}
+
+/* ── MAIN LAYOUT ─────────────────────────────────────────────────── */
+main{padding:20px 5%}
+
+/* ── KPI CARDS ───────────────────────────────────────────────────── */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.kpi-card{background:var(--white);border-radius:12px;padding:18px 20px;border:1px solid var(--border);transition:transform .2s,box-shadow .2s}
+.kpi-card:hover{transform:translateY(-2px)}
+.kpi-icon{width:36px;height:36px;border-radius:8px;background:#eff6ff;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.kpi-icon svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.kpi-label{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
+.kpi-value{font-size:26px;font-weight:700;color:var(--navy);letter-spacing:-0.5px;margin-bottom:4px}
+.kpi-change{font-size:12px;font-weight:500}
+.up{color:var(--green)}
+.down{color:var(--red)}
+.kpi-sub{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* ── CHART GRID ──────────────────────────────────────────────────── */
+.chart-grid-top{display:grid;grid-template-columns:1.7fr 1fr;gap:16px;margin-bottom:16px}
+.chart-grid-bottom{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.chart-card{background:var(--white);border-radius:12px;padding:20px;border:1px solid var(--border)}
+.chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.chart-title{font-size:14px;font-weight:600;color:var(--navy)}
+.chart-badge{font-size:11px;padding:3px 10px;border-radius:20px;background:#eff6ff;color:var(--accent);font-weight:500}
+
+/* ── DATA TABLE ──────────────────────────────────────────────────── */
+.table-card{background:var(--white);border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:20px}
+.table-header{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.table-header h3{font-size:14px;font-weight:600;color:var(--navy)}
+.search-box{padding:6px 12px;border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--navy);outline:none;width:180px}
+.search-box:focus{border-color:var(--accent)}
+table{width:100%;border-collapse:collapse}
+thead th{text-align:left;padding:10px 20px;background:#f8fafc;font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid var(--border);cursor:pointer;user-select:none}
+thead th:hover{color:var(--accent)}
+tbody td{padding:11px 20px;font-size:13px;border-bottom:1px solid #f8fafc;color:var(--navy)}
+tbody tr:hover td{background:#f8fafc}
+tbody tr:last-child td{border-bottom:none}
+.badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:500}
+.badge-up{background:var(--green-bg);color:var(--green)}
+.badge-dn{background:var(--red-bg);color:var(--red)}
+.badge-cat{background:#f5f3ff;color:#7c3aed}
+
+/* ── INSIGHT CARDS ───────────────────────────────────────────────── */
+.insights-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.insight-card{background:var(--white);border-radius:12px;padding:16px 18px;border:1px solid var(--border);border-left:3px solid var(--accent)}
+.insight-title{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:6px}
+.insight-text{font-size:12px;color:var(--muted);line-height:1.6}
+
+/* ── FOOTER ──────────────────────────────────────────────────────── */
+footer{background:var(--navy);text-align:center;padding:20px 5%;font-size:12px;color:#475569}
+footer a{color:var(--accent2);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────── */
+@media(max-width:900px){
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .chart-grid-top,.chart-grid-bottom{grid-template-columns:1fr}
+  .insights-grid{grid-template-columns:1fr}
+}
+@media(max-width:500px){
+  .kpi-grid{grid-template-columns:1fr}
+  .dash-header h1{font-size:18px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Aye Thet<span>.</span></div>
+  <a href="https://ayethet-07.github.io/ayethetthetkhaing/" class="nav-back">← Back to portfolio</a>
+</nav>
+
+<div class="dash-header">
+  <div>
+    <h1>Dubai Duty Free — Retail Analytics Dashboard</h1>
+    <p>Sales Performance · Category Analysis · KPI Tracking · Product Intelligence · 2024</p>
+  </div>
+  <div class="filter-group">
+    <label>Filter period:</label>
+    <select id="period-filter" onchange="applyFilter()">
+      <option value="all">Full year 2024</option>
+      <option value="q1">Q1 — Jan to Mar</option>
+      <option value="q2">Q2 — Apr to Jun</option>
+      <option value="q3">Q3 — Jul to Sep</option>
+      <option value="q4">Q4 — Oct to Dec</option>
+      <option value="0">January</option>
+      <option value="1">February</option>
+      <option value="2">March</option>
+      <option value="3">April</option>
+      <option value="4">May</option>
+      <option value="5">June</option>
+      <option value="6">July</option>
+      <option value="7">August</option>
+      <option value="8">September</option>
+      <option value="9">October</option>
+      <option value="10">November</option>
+      <option value="11">December</option>
+    </select>
+  </div>
+</div>
+
+<main>
+
+  <!-- KPI CARDS -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div class="kpi-label">Total Revenue</div>
+      <div class="kpi-value" id="k-rev">$2.14B</div>
+      <div class="kpi-change up" id="k-rev-c">▲ +8.3% vs 2023</div>
+      <div class="kpi-sub" id="k-rev-s">90M+ passengers served</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+      <div class="kpi-label">Transactions</div>
+      <div class="kpi-value" id="k-tx">18.4M</div>
+      <div class="kpi-change up" id="k-tx-c">▲ +12.1% vs 2023</div>
+      <div class="kpi-sub" id="k-tx-s">Avg 50,400 per day</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+      <div class="kpi-label">Avg Basket Size</div>
+      <div class="kpi-value" id="k-basket">$116</div>
+      <div class="kpi-change down" id="k-basket-c">▼ -3.2% vs 2023</div>
+      <div class="kpi-sub" id="k-basket-s">Target: $120 per transaction</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+      <div class="kpi-label">Revenue vs Target</div>
+      <div class="kpi-value" id="k-target">107%</div>
+      <div class="kpi-change up" id="k-target-c">▲ Exceeded annual target</div>
+      <div class="kpi-sub" id="k-target-s">Target was $2.0B</div>
+    </div>
+  </div>
+
+  <!-- TOP CHARTS -->
+  <div class="chart-grid-top">
+    <div class="chart-card">
+      <div class="chart-header">
+        <div class="chart-title">Monthly Revenue Trend (USD millions)</div>
+        <div class="chart-badge" id="line-badge">12-month view</div>
+      </div>
+      <canvas id="lineChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-header">
+        <div class="chart-title">Revenue by Category</div>
+        <div class="chart-badge">2024 mix</div>
+      </div>
+      <canvas id="doughnutChart"></canvas>
+    </div>
+  </div>
+
+  <!-- BOTTOM CHARTS -->
+  <div class="chart-grid-bottom">
+    <div class="chart-card">
+      <div class="chart-header">
+        <div class="chart-title">Category Performance vs Target (USD millions)</div>
+        <div class="chart-badge">actual vs target</div>
+      </div>
+      <canvas id="barChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-header">
+        <div class="chart-title">Quarterly Revenue Breakdown</div>
+        <div class="chart-badge">Q1–Q4</div>
+      </div>
+      <canvas id="quarterChart"></canvas>
+    </div>
+  </div>
+
+  <!-- PRODUCT TABLE -->
+  <div class="table-card">
+    <div class="table-header">
+      <h3>Top Products by Revenue — 2024</h3>
+      <input class="search-box" id="search" placeholder="Search products..." oninput="filterTable()">
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)"># &nbsp;Product ↕</th>
+          <th onclick="sortTable(1)">Category ↕</th>
+          <th onclick="sortTable(2)">Revenue ↕</th>
+          <th onclick="sortTable(3)">Units Sold ↕</th>
+          <th onclick="sortTable(4)">vs Target ↕</th>
+          <th onclick="sortTable(5)">Trend ↕</th>
+        </tr>
+      </thead>
+      <tbody id="product-tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- INSIGHTS -->
+  <div class="insights-grid">
+    <div class="insight-card">
+      <div class="insight-title">Peak Trading Period</div>
+      <div class="insight-text">July was the strongest month at $224M revenue — driven by peak summer travel season and a targeted luxury promotions campaign across Perfumes and Jewellery categories.</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-title">Category Opportunity</div>
+      <div class="insight-text">Electronics underperformed vs target by 11% despite high foot traffic. Data suggests price point positioning is the primary barrier — competitor price benchmarking recommended.</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-title">Basket Size Action Required</div>
+      <div class="insight-text">Average basket size of $116 fell 3.2% vs 2023 despite transaction volume growth of 12.1%. Focus on upselling training and bundling strategies could recover $45M in latent revenue.</div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Built by <a href="https://ayethet-07.github.io/ayethetthetkhaing/">Aye Thet Thet Khaing</a> &nbsp;·&nbsp;
+  Data Analyst &amp; Aspiring Full-Stack Developer &nbsp;·&nbsp;
+  Built with HTML, CSS &amp; JavaScript (Chart.js) &nbsp;·&nbsp;
+  <a href="https://github.com/ayethet-07">GitHub</a>
+</footer>
+
+<script>
+// ── DATA ────────────────────────────────────────────────────────────
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const REVENUE = [158,142,171,165,189,210,224,198,176,182,168,157];
+const CATS    = ['Perfumes','Liquor','Tobacco','Fashion','Jewellery','Electronics','Food & Confec.'];
+const CAT_COL = ['#3b82f6','#8b5cf6','#f59e0b','#10b981','#f43f5e','#06b6d4','#84cc16'];
+const CAT_REV = [599,471,385,299,214,107,64];
+const CAT_TGT = [580,450,400,280,200,120,70];
+const Q_DATA  = [471,564,598,507];
+const Q_COLS  = ['rgba(59,130,246,0.8)','rgba(139,92,246,0.8)','rgba(245,158,11,0.8)','rgba(16,163,74,0.8)'];
+
+const PRODUCTS = [
+  {name:'Chanel No.5 EDP 100ml',    cat:'Perfumes',   rev:48.2, units:'412,000', tgt:'+12%', trend:'▲',up:true},
+  {name:'Johnnie Walker Blue Label', cat:'Liquor',     rev:31.7, units:'248,000', tgt:'+8%',  trend:'▲',up:true},
+  {name:'Marlboro Gold Carton',      cat:'Tobacco',    rev:28.4, units:'1.84M',   tgt:'-3%',  trend:'▼',up:false},
+  {name:'Rolex Datejust 36',         cat:'Jewellery',  rev:24.1, units:'9,200',   tgt:'+19%', trend:'▲',up:true},
+  {name:'Dior Sauvage EDP 100ml',    cat:'Perfumes',   rev:22.8, units:'194,000', tgt:'+15%', trend:'▲',up:true},
+  {name:'Burberry Brit Rhythm',      cat:'Fashion',    rev:19.3, units:'86,000',  tgt:'-1%',  trend:'▼',up:false},
+  {name:'Hennessy XO 70cl',          cat:'Liquor',     rev:18.7, units:'142,000', tgt:'+6%',  trend:'▲',up:true},
+  {name:'Apple iPad Pro 12.9"',      cat:'Electronics',rev:14.2, units:'22,400',  tgt:'-8%',  trend:'▼',up:false},
+  {name:'Godiva Luxury Box 1kg',     cat:'Food & Confec.',rev:11.4,units:'380,000',tgt:'+4%', trend:'▲',up:true},
+  {name:'Cartier Love Bracelet',     cat:'Jewellery',  rev:10.8, units:'3,100',   tgt:'+22%', trend:'▲',up:true},
+];
+
+// ── CHART INSTANCES ──────────────────────────────────────────────────
+let lineC, doughC, barC, quarterC;
+
+function initCharts(){
+  // Line
+  lineC = new Chart(document.getElementById('lineChart'),{
+    type:'line',
+    data:{labels:MONTHS,datasets:[{
+      label:'Revenue ($M)',data:[...REVENUE],
+      borderColor:'#3b82f6',backgroundColor:'rgba(59,130,246,0.07)',
+      borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#3b82f6',
+      pointHoverRadius:6,tension:0.4,fill:true
+    }]},
+    options:{responsive:true,interaction:{intersect:false,mode:'index'},
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:c=>'  $'+c.parsed.y+'M'}}},
+      scales:{
+        y:{grid:{color:'#f1f5f9'},ticks:{font:{size:11},callback:v=>'$'+v+'M'}},
+        x:{grid:{display:false},ticks:{font:{size:11}}}
+      }}
+  });
+
+  // Doughnut
+  doughC = new Chart(document.getElementById('doughnutChart'),{
+    type:'doughnut',
+    data:{labels:CATS,datasets:[{
+      data:[...CAT_REV],backgroundColor:CAT_COL,
+      borderWidth:3,borderColor:'#fff',hoverOffset:6
+    }]},
+    options:{responsive:true,cutout:'60%',
+      plugins:{legend:{position:'right',labels:{font:{size:11},boxWidth:12,padding:8}},
+        tooltip:{callbacks:{label:c=>` $${c.parsed}M (${Math.round(c.parsed/2140*100)}%)`}}}}
+  });
+
+  // Bar
+  barC = new Chart(document.getElementById('barChart'),{
+    type:'bar',
+    data:{labels:CATS,datasets:[
+      {label:'Actual ($M)',data:[...CAT_REV],backgroundColor:'rgba(59,130,246,0.85)',borderRadius:5,borderSkipped:false},
+      {label:'Target ($M)',data:[...CAT_TGT],backgroundColor:'rgba(148,163,184,0.35)',borderRadius:5,borderSkipped:false}
+    ]},
+    options:{responsive:true,
+      plugins:{legend:{labels:{font:{size:11},boxWidth:12}}},
+      scales:{
+        y:{grid:{color:'#f1f5f9'},ticks:{font:{size:11},callback:v=>'$'+v+'M'}},
+        x:{grid:{display:false},ticks:{font:{size:10},maxRotation:30}}
+      }}
+  });
+
+  // Quarter
+  quarterC = new Chart(document.getElementById('quarterChart'),{
+    type:'bar',
+    data:{labels:['Q1 (Jan–Mar)','Q2 (Apr–Jun)','Q3 (Jul–Sep)','Q4 (Oct–Dec)'],
+      datasets:[{label:'Revenue ($M)',data:[...Q_DATA],backgroundColor:Q_COLS,borderRadius:8,borderSkipped:false}]},
+    options:{responsive:true,
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:c=>`  $${c.parsed.y}M`}}},
+      scales:{
+        y:{grid:{color:'#f1f5f9'},ticks:{font:{size:11},callback:v=>'$'+v+'M'}},
+        x:{grid:{display:false},ticks:{font:{size:11}}}
+      }}
+  });
+}
+
+// ── TABLE ────────────────────────────────────────────────────────────
+let sortDir = 1, sortCol = 0;
+
+function renderTable(data){
+  const tb = document.getElementById('product-tbody');
+  tb.innerHTML = data.map((p,i)=>`
+    <tr>
+      <td><strong>${i+1}.</strong> ${p.name}</td>
+      <td><span class="badge badge-cat">${p.cat}</span></td>
+      <td><strong>$${p.rev}M</strong></td>
+      <td>${p.units}</td>
+      <td><span class="badge ${p.up?'badge-up':'badge-dn'}">${p.trend} ${p.tgt}</span></td>
+      <td style="font-size:16px;color:${p.up?'var(--green)':'var(--red)'}">${p.trend}</td>
+    </tr>`).join('');
+}
+
+function filterTable(){
+  const q = document.getElementById('search').value.toLowerCase();
+  renderTable(PRODUCTS.filter(p=>p.name.toLowerCase().includes(q)||p.cat.toLowerCase().includes(q)));
+}
+
+function sortTable(col){
+  sortDir = (col===sortCol)?-sortDir:1;
+  sortCol = col;
+  const keys = ['name','cat','rev','units','tgt','trend'];
+  const sorted = [...PRODUCTS].sort((a,b)=>{
+    const av = a[keys[col]], bv = b[keys[col]];
+    return typeof av==='number' ? (av-bv)*sortDir : av.localeCompare(bv)*sortDir;
+  });
+  renderTable(sorted);
+}
+
+// ── FILTER ───────────────────────────────────────────────────────────
+function applyFilter(){
+  const v = document.getElementById('period-filter').value;
+  let data, label, kRev, kTx, kBasket, kTarget, kRevC, kTxC;
+
+  if(v==='all'){
+    data=[...REVENUE]; label='12-month view';
+    kRev='$2.14B'; kTx='18.4M'; kBasket='$116'; kTarget='107%';
+    kRevC='▲ +8.3% vs 2023'; kTxC='▲ +12.1% vs 2023';
+  } else if(v==='q1'){
+    data=REVENUE.map((d,i)=>i<3?d:null); label='Q1 view';
+    kRev='$471M'; kTx='4.05M'; kBasket='$116'; kTarget='102%';
+    kRevC='▲ +5.1% vs Q1 2023'; kTxC='▲ +9.2% vs Q1 2023';
+  } else if(v==='q2'){
+    data=REVENUE.map((d,i)=>i>=3&&i<6?d:null); label='Q2 view';
+    kRev='$564M'; kTx='4.85M'; kBasket='$116'; kTarget='108%';
+    kRevC='▲ +9.7% vs Q2 2023'; kTxC='▲ +14.3% vs Q2 2023';
+  } else if(v==='q3'){
+    data=REVENUE.map((d,i)=>i>=6&&i<9?d:null); label='Q3 view';
+    kRev='$598M'; kTx='5.14M'; kBasket='$116'; kTarget='112%';
+    kRevC='▲ +11.2% vs Q3 2023'; kTxC='▲ +15.8% vs Q3 2023';
+  } else if(v==='q4'){
+    data=REVENUE.map((d,i)=>i>=9?d:null); label='Q4 view';
+    kRev='$507M'; kTx='4.36M'; kBasket='$116'; kTarget='103%';
+    kRevC='▲ +5.8% vs Q4 2023'; kTxC='▲ +8.4% vs Q4 2023';
+  } else {
+    const i=parseInt(v);
+    data=REVENUE.map((d,j)=>j===i?d:null); label=MONTHS[i]+' view';
+    kRev='$'+REVENUE[i]+'M'; kTx=(REVENUE[i]*0.86/100).toFixed(2)+'M';
+    kBasket='$116'; kTarget=Math.round(REVENUE[i]/2000*1200)+'%';
+    kRevC='Single month view'; kTxC='Single month view';
+  }
+
+  lineC.data.datasets[0].data = data;
+  lineC.update();
+  document.getElementById('line-badge').textContent = label;
+  document.getElementById('k-rev').textContent = kRev;
+  document.getElementById('k-tx').textContent = kTx;
+  document.getElementById('k-basket').textContent = kBasket;
+  document.getElementById('k-target').textContent = kTarget;
+  document.getElementById('k-rev-c').textContent = kRevC;
+  document.getElementById('k-tx-c').textContent = kTxC;
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────
+initCharts();
+renderTable(PRODUCTS);
+</script>
+</body>
+</html>
