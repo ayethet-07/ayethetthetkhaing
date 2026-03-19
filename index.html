@@ -23,7 +23,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;d
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap}
 .btn-primary{background:var(--accent);color:white;padding:11px 24px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;transition:background 0.2s}
 .btn-primary:hover{background:#2563eb}
-.btn-outline{background:transparent;color:white;padding:11px 24px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:500;border:1px solid rgba(255,255,255,0.3);transition:border-color 0.2s}
+.btn-outline{background:transparent;color:white;padding:11px 24px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:500;border:1px solid rgba(255,255,255,0.3);transition:border-color 0.2s;cursor:pointer}
 .btn-outline:hover{border-color:white}
 .avatar-circle{width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:700;color:white;flex-shrink:0;border:3px solid rgba(255,255,255,0.15)}
 section{padding:64px 5%}
@@ -59,24 +59,51 @@ section{padding:64px 5%}
 .learn-card{background:white;border-radius:10px;padding:16px;border:1px solid var(--border);border-left:3px solid var(--accent)}
 .learn-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:4px}
 .learn-status{font-size:12px;color:var(--accent)}
-.contact{background:var(--navy);text-align:center}
-.contact .section-title{color:white}
-.contact p{color:#94a3b8;margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto}
-.contact-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
-.contact-btn{padding:12px 28px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;border:1px solid rgba(255,255,255,0.2);color:white;transition:background 0.2s}
-.contact-btn:hover{background:rgba(255,255,255,0.1)}
-.contact-btn.primary{background:var(--accent);border-color:var(--accent)}
-.contact-btn.primary:hover{background:#2563eb}
+
+/* CONTACT SECTION */
+.contact{background:var(--navy)}
+.contact .section-label{color:var(--accent2)}
+.contact .section-title{color:white;margin-bottom:12px}
+.contact-intro{color:#94a3b8;margin-bottom:40px;max-width:500px}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.contact-info h3{font-size:16px;font-weight:600;color:white;margin-bottom:16px}
+.contact-detail{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.contact-icon{width:36px;height:36px;border-radius:8px;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-icon svg{width:16px;height:16px;stroke:var(--accent2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.contact-detail-text a{color:#94a3b8;text-decoration:none;font-size:14px;transition:color 0.2s}
+.contact-detail-text a:hover{color:white}
+.contact-detail-label{font-size:11px;color:#475569;margin-bottom:2px}
+
+/* FORM */
+.contact-form{background:white;border-radius:16px;padding:28px}
+.contact-form h3{font-size:16px;font-weight:600;color:var(--navy);margin-bottom:20px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-group{margin-bottom:12px}
+.form-group label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em}
+.form-group input,
+.form-group textarea,
+.form-group select{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:14px;color:var(--navy);background:var(--light);outline:none;transition:border-color 0.2s;font-family:inherit}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{border-color:var(--accent);background:white}
+.form-group textarea{resize:vertical;min-height:110px}
+.form-submit{width:100%;padding:12px;background:var(--accent);color:white;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;transition:background 0.2s;font-family:inherit}
+.form-submit:hover{background:#2563eb}
+.form-submit:disabled{background:#94a3b8;cursor:not-allowed}
+.form-status{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:14px;text-align:center;display:none}
+.form-status.success{display:block;background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0}
+.form-status.error{display:block;background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
+.form-status.sending{display:block;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+
 footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#475569}
 
-/* RESPONSIVE — mobile friendly */
 @media(max-width:768px){
   .hero{grid-template-columns:1fr;padding:50px 6% 60px}
   .avatar-circle{width:90px;height:90px;font-size:28px;justify-self:start}
   .hero-text h1{font-size:28px}
   .hero-tagline{font-size:15px}
-  .about-grid{grid-template-columns:1fr}
-  .edu-grid{grid-template-columns:1fr}
+  .about-grid,.contact-grid{grid-template-columns:1fr}
+  .edu-grid,.form-row{grid-template-columns:1fr}
   .nav-links{gap:16px}
   .section-title{font-size:22px}
 }
@@ -88,18 +115,17 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
   <div class="logo">Aye Thet Thet Khaing<span>.</span></div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
-    <li><a href="#skills" class="btn-outline">View my skills</a></li>
+    <li><a href="#skills">Skills</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#education">Education</a></li>
-    <li><a href="#contact" class="btn-primary">Get in touch</a></li>
-    <li><a href="AyeThetThetKhaing-CV.pdf" download class="btn-outline">Download CV</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
 <section class="hero">
   <div class="hero-text">
     <h1>Hi, I'm <span>Aye Thet Thet Khaing</span></h1>
-    <p class="hero-tagline">Data Analyst · Sales Support Specialist · Aspiring Full-Stack Developer</p>
+    <p class="hero-tagline">Data Analyst · MBA Student · Aspiring Full-Stack Developer</p>
     <div class="hero-tags">
       <span class="tag">Data Analysis</span>
       <span class="tag">Project Management</span>
@@ -126,7 +152,7 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
     <div class="about-text">
       <p>I'm a data analyst and operations professional with over 17 years of experience across international retail, back office support, and management — including 14 years at Dubai Duty Free, one of the world's leading travel retailers.</p>
       <p>Having completed my MSc in Project Management, I am now expanding into full-stack web development while completing my MBA. I bring a rare combination of analytical rigour, business strategy awareness, and hands-on operational expertise.</p>
-      <p>I thrive where business insight meets technology, designing solutions that are not just functional, but genuinely useful to the people who use them.</p>
+      <p>I thrive where business insight meets technology — designing solutions that are not just functional, but genuinely useful to the people who use them.</p>
     </div>
     <div class="stat-grid">
       <div class="stat-card">
@@ -142,7 +168,7 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
         <div class="stat-label">Project Management</div>
       </div>
       <div class="stat-card">
-        <div class="stat-num">2</div>
+        <div class="stat-num">3</div>
         <div class="stat-label">Countries worked in</div>
       </div>
     </div>
@@ -200,37 +226,33 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
   <div class="section-label">Career</div>
   <div class="section-title">Professional experience</div>
   <div class="timeline">
-
     <div class="exp-item">
       <div class="exp-dot"></div>
       <div>
         <div class="exp-role">Back Office Support Specialist &amp; Data Analyst</div>
         <div class="exp-company">Dubai Duty Free — Dubai International Airport</div>
-        <div class="exp-period">2022 – 2025</div>
+        <div class="exp-period">Sep 2022 – May 2025</div>
         <div class="exp-desc">Analysed business data to surface actionable insights, built dashboards and reports, and supported strategic decision-making across departments. Maintained data integrity across systems and coordinated between front-line teams and management in a 24/7 international airport environment serving over 90 million annual passengers.</div>
       </div>
     </div>
-
     <div class="exp-item">
       <div class="exp-dot"></div>
       <div>
         <div class="exp-role">Operations &amp; Retail Consultant</div>
         <div class="exp-company">Independent Consultant — Yangon, Myanmar</div>
-        <div class="exp-period">2020 – 2022</div>
+        <div class="exp-period">Nov 2020 – Aug 2022</div>
         <div class="exp-desc">Managed financial tracking, reporting and forecasting using data analysis. Oversaw stock and inventory management, and collected and organised sales data for performance analysis across retail clients.</div>
       </div>
     </div>
-
     <div class="exp-item">
       <div class="exp-dot"></div>
       <div>
         <div class="exp-role">Senior Retail Specialist &amp; Team Coach</div>
         <div class="exp-company">Dubai Duty Free — Dubai International Airport</div>
-        <div class="exp-period">2008 – 2020</div>
+        <div class="exp-period">Aug 2008 – Aug 2020</div>
         <div class="exp-desc">Delivered exceptional customer experience across luxury fashion and jewellery categories over 12 years. Responsibilities grew to include team coaching, shift management, and stock operations — contributing to one of the world's highest-revenue travel retail environments.</div>
       </div>
     </div>
-
   </div>
 </section>
 
@@ -282,19 +304,111 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
   </div>
 </section>
 
+<!-- CONTACT SECTION WITH WORKING FORM -->
 <section class="contact" id="contact">
-  <div class="section-label" style="color:var(--accent2)">Get in touch</div>
+  <div class="section-label">Get in touch</div>
   <div class="section-title">Let's work together</div>
-  <p>Open to data analyst, business analyst, project management, retail management, and junior developer opportunities. Based in Barcelona, Spain.</p>
-  <div class="contact-links">
-    <a href="mailto:ayethet.07@gmail.com" class="contact-btn primary">Email me</a>
-    <a href="https://www.linkedin.com/in/aye-thet-thet-khaing-a0288680/" class="contact-btn">LinkedIn</a>
-    <a href="https://github.com/ayethet-07" class="contact-btn">GitHub</a>
+  <p class="contact-intro">Open to data analyst, business analyst, project management, retail management, and junior developer opportunities. Based in Barcelona, Spain.</p>
+
+  <div class="contact-grid">
+
+    <!-- Left: contact details -->
+    <div class="contact-info">
+      <h3>Contact details</h3>
+
+      <div class="contact-detail">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="contact-detail-text">
+          <div class="contact-detail-label">Email</div>
+          <a href="mailto:ayethet.07@gmail.com">ayethet.07@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </div>
+        <div class="contact-detail-text">
+          <div class="contact-detail-label">LinkedIn</div>
+          <a href="https://www.linkedin.com/in/aye-thet-thet-khaing-a0288680/" target="_blank">aye-thet-thet-khaing</a>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        </div>
+        <div class="contact-detail-text">
+          <div class="contact-detail-label">GitHub</div>
+          <a href="https://github.com/ayethet-07" target="_blank">ayethet-07</a>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="contact-detail-text">
+          <div class="contact-detail-label">Location</div>
+          <a href="#">Barcelona, Spain · Open to remote</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: contact form -->
+    <div class="contact-form">
+      <h3>Send me a message</h3>
+
+      <!--
+        IMPORTANT: Replace YOUR_FORMSPREE_ID below with your actual Formspree form ID.
+        Steps:
+          1. Go to formspree.io and sign up free
+          2. Create a new form — name it "Portfolio Contact"
+          3. Copy the form ID (looks like: xyzabcde)
+          4. Replace YOUR_FORMSPREE_ID with that ID
+        Example: action="https://formspree.io/f/xyzabcde"
+      -->
+      <form id="contact-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Your email</label>
+            <input type="email" id="email" name="email" placeholder="jane@company.com" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <select id="subject" name="subject">
+            <option value="">Select a reason...</option>
+            <option value="Job opportunity">Job opportunity</option>
+            <option value="Freelance project">Freelance project</option>
+            <option value="Collaboration">Collaboration</option>
+            <option value="Just saying hello">Just saying hello</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell me about the opportunity or project..." required></textarea>
+        </div>
+
+        <button type="submit" class="form-submit" id="submit-btn">Send message</button>
+        <div class="form-status" id="form-status"></div>
+      </form>
+    </div>
+
   </div>
 </section>
 
 <footer>
-  Built with HTML &amp; CSS · Hosted on GitHub Pages · &copy; 2026 Aye Thet Thet Khaing
+  Built with HTML &amp; CSS &amp; JavaScript · Hosted on GitHub Pages · &copy; 2026 Aye Thet Thet Khaing
 </footer>
 
 <script>
@@ -332,6 +446,45 @@ footer{background:#0a0f1a;text-align:center;padding:20px;font-size:13px;color:#4
     sec.style.transform = 'translateY(24px)';
     sec.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(sec);
+  });
+
+  // Contact form submission with JavaScript fetch API
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+  const submitBtn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault(); // stop normal form submission
+
+    // Show sending state
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    status.className = 'form-status sending';
+    status.textContent = 'Sending your message...';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        // Success
+        status.className = 'form-status success';
+        status.textContent = 'Message sent! I will get back to you soon.';
+        form.reset();
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (err) {
+      // Error
+      status.className = 'form-status error';
+      status.textContent = 'Something went wrong. Please email me directly at ayethet.07@gmail.com';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send message';
+    }
   });
 </script>
 
