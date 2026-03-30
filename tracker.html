@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Application Tracker | Aye Thet Thet Khaing</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0f172a;--navy2:#1e293b;--accent:#3b82f6;--accent2:#60a5fa;--light:#f8fafc;--border:#e2e8f0;--muted:#64748b;--white:#fff;--green:#22c55e;--amber:#f59e0b;--red:#ef4444}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--light);color:var(--navy);min-height:100vh}
+nav{background:var(--navy);padding:0 5%;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{color:white;font-weight:700;font-size:15px}.nav-brand span{color:var(--accent2)}
+.nav-back{color:#94a3b8;text-decoration:none;font-size:13px;transition:color .2s}.nav-back:hover{color:white}
+.page{max-width:1100px;margin:0 auto;padding:24px 5%}
+.page-header{margin-bottom:24px}
+.page-title{font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--muted)}
+.stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}
+.stat-card{background:var(--white);border-radius:12px;padding:16px 18px;border:1px solid var(--border)}
+.stat-num{font-size:28px;font-weight:700;margin-bottom:4px}
+.stat-label{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.s-blue{color:var(--accent)}.s-amber{color:var(--amber)}.s-green{color:var(--green)}.s-red{color:var(--red)}.s-muted{color:var(--muted)}
+.form-card{background:var(--white);border-radius:12px;padding:20px;border:1px solid var(--border);margin-bottom:16px}
+.form-card h3{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:14px}
+.form-row{display:grid;grid-template-columns:1.5fr 1.5fr 1fr 1fr auto;gap:10px;align-items:end}
+.fg label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em}
+.fg input,.fg select,.fg textarea{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--light);outline:none;transition:border-color .2s;font-family:inherit}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--accent);background:white}
+.add-btn{padding:9px 22px;background:var(--accent);color:white;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s;white-space:nowrap}
+.add-btn:hover{background:#2563eb}
+.table-card{background:var(--white);border-radius:12px;border:1px solid var(--border);overflow:hidden}
+.table-toolbar{padding:14px 18px;display:flex;gap:8px;border-bottom:1px solid var(--border);flex-wrap:wrap;align-items:center}
+.filter-btn{padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:var(--light);font-size:12px;cursor:pointer;color:var(--muted);font-weight:500;transition:all .15s}
+.filter-btn:hover{border-color:var(--accent);color:var(--accent)}
+.filter-btn.active{background:#eff6ff;color:var(--accent);border-color:var(--accent);font-weight:600}
+.search-box{padding:6px 14px;border:1px solid var(--border);border-radius:20px;font-size:13px;outline:none;margin-left:auto;width:200px}
+.search-box:focus{border-color:var(--accent)}
+.sort-info{font-size:12px;color:var(--muted);padding:0 4px}
+table{width:100%;border-collapse:collapse}
+thead th{padding:10px 16px;text-align:left;background:#f8fafc;font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;white-space:nowrap}
+thead th:hover{color:var(--accent)}
+tbody td{padding:11px 16px;border-bottom:1px solid #f8fafc;font-size:13px;color:var(--navy);vertical-align:middle}
+tbody tr:hover td{background:#fafafa}
+tbody tr:last-child td{border-bottom:none}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500}
+.b-applied{background:#eff6ff;color:#1d4ed8}
+.b-interview{background:#fef9c3;color:#854d0e}
+.b-offer{background:#f0fdf4;color:#15803d}
+.b-rejected{background:#fef2f2;color:#dc2626}
+.b-noresponse{background:#f1f5f9;color:#64748b}
+.status-select{border:none;background:none;font-size:12px;cursor:pointer;padding:2px 4px;border-radius:4px;outline:none;color:var(--muted)}
+.status-select:focus{background:var(--light)}
+.del-btn{padding:4px 10px;border:1px solid var(--border);border-radius:6px;background:none;cursor:pointer;font-size:11px;color:var(--muted);transition:all .15s}
+.del-btn:hover{background:#fef2f2;border-color:#fca5a5;color:var(--red)}
+.days-urgent{color:var(--red);font-weight:500}
+.empty-state{padding:48px;text-align:center;color:var(--muted)}
+.empty-state p{font-size:14px;margin-top:8px}
+.note-text{font-size:12px;color:var(--muted);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.progress-wrap{margin-top:8px}
+.progress-bar-bg{background:var(--border);border-radius:4px;height:6px;overflow:hidden;margin-bottom:4px}
+.progress-bar-fill{height:6px;background:linear-gradient(90deg,var(--accent),#8b5cf6);border-radius:4px;transition:width .5s ease}
+.progress-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
+footer{text-align:center;padding:24px;font-size:12px;color:var(--muted)}
+footer a{color:var(--accent);text-decoration:none}
+@media(max-width:768px){
+  .form-row{grid-template-columns:1fr 1fr}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .search-box{width:100%;margin-left:0;margin-top:8px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Aye Thet<span>.</span></div>
+  <a href="https://ayethet-07.github.io/ayethetthetkhaing/" class="nav-back">← Back to portfolio</a>
+</nav>
+
+<div class="page">
+  <div class="page-header">
+    <h1 class="page-title">Job Application Tracker</h1>
+    <p class="page-sub">Track every application — company, role, status, and follow-up dates</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num s-blue" id="st-total">0</div>
+      <div class="stat-label">Total applied</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num s-amber" id="st-interview">0</div>
+      <div class="stat-label">Interviews</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num s-green" id="st-offer">0</div>
+      <div class="stat-label">Offers</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num s-red" id="st-rejected">0</div>
+      <div class="stat-label">Rejected</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num s-muted" id="st-rate">0%</div>
+      <div class="stat-label">Interview rate</div>
+      <div class="progress-wrap">
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="rate-bar" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD FORM -->
+  <div class="form-card">
+    <h3>Add new application</h3>
+    <div class="form-row">
+      <div class="fg"><label>Company</label><input id="f-company" placeholder="e.g. Amazon" /></div>
+      <div class="fg"><label>Role</label><input id="f-role" placeholder="e.g. Data Analyst" /></div>
+      <div class="fg">
+        <label>Status</label>
+        <select id="f-status">
+          <option>Applied</option>
+          <option>Interview</option>
+          <option>Offer</option>
+          <option>Rejected</option>
+          <option>No response</option>
+        </select>
+      </div>
+      <div class="fg"><label>Notes</label><input id="f-notes" placeholder="Optional notes" /></div>
+      <button class="add-btn" onclick="addApp()">+ Add</button>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-card">
+    <div class="table-toolbar">
+      <button class="filter-btn active" onclick="setFilter('All',this)">All</button>
+      <button class="filter-btn" onclick="setFilter('Applied',this)">Applied</button>
+      <button class="filter-btn" onclick="setFilter('Interview',this)">Interview</button>
+      <button class="filter-btn" onclick="setFilter('Offer',this)">Offer</button>
+      <button class="filter-btn" onclick="setFilter('Rejected',this)">Rejected</button>
+      <button class="filter-btn" onclick="setFilter('No response',this)">No response</button>
+      <span class="sort-info" id="sort-info"></span>
+      <input class="search-box" id="search" placeholder="Search company or role..." oninput="render()">
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sortBy('num')">#</th>
+          <th onclick="sortBy('company')">Company ↕</th>
+          <th onclick="sortBy('role')">Role ↕</th>
+          <th onclick="sortBy('date')">Date applied ↕</th>
+          <th>Status</th>
+          <th onclick="sortBy('days')">Days since ↕</th>
+          <th>Notes</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="app-tbody"></tbody>
+    </table>
+    <div class="empty-state" id="empty-msg" style="display:none">
+      <div style="font-size:32px">📋</div>
+      <p>No applications yet — add your first one above</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Built by <a href="https://ayethet-07.github.io/ayethetthetkhaing/">Aye Thet Thet Khaing</a>
+  &nbsp;·&nbsp; Data Analyst &nbsp;·&nbsp; Built with HTML, CSS & JavaScript &nbsp;·&nbsp;
+  Stage 4 project — Arrays, Objects, Functions & localStorage
+</footer>
+
+<script>
+// ── DATA ────────────────────────────────────────────────────────────
+let apps = JSON.parse(localStorage.getItem('jobApps') || '[]');
+let currentFilter = 'All';
+let sortKey = 'date';
+let sortDir = -1; // -1 = descending (newest first)
+
+const badgeClass = {
+  'Applied':'b-applied','Interview':'b-interview',
+  'Offer':'b-offer','Rejected':'b-rejected','No response':'b-noresponse'
+};
+
+// ── SAVE ─────────────────────────────────────────────────────────────
+function save() {
+  localStorage.setItem('jobApps', JSON.stringify(apps));
+}
+
+// ── DAYS SINCE ───────────────────────────────────────────────────────
+function daysSince(dateStr) {
+  const diff = new Date() - new Date(dateStr);
+  return Math.floor(diff / (1000 * 60 * 60 * 24));
+}
+
+// ── ADD ───────────────────────────────────────────────────────────────
+function addApp() {
+  const company = document.getElementById('f-company').value.trim();
+  const role    = document.getElementById('f-role').value.trim();
+  const status  = document.getElementById('f-status').value;
+  const notes   = document.getElementById('f-notes').value.trim();
+
+  if (!company || !role) { alert('Please enter company and role'); return; }
+
+  apps.unshift({
+    id: Date.now(),
+    company, role, status, notes,
+    date: new Date().toISOString().split('T')[0]
+  });
+
+  save();
+  document.getElementById('f-company').value = '';
+  document.getElementById('f-role').value    = '';
+  document.getElementById('f-notes').value   = '';
+  render();
+}
+
+// ── DELETE ────────────────────────────────────────────────────────────
+function deleteApp(id) {
+  if (!confirm('Delete this application?')) return;
+  apps = apps.filter(a => a.id !== id);
+  save(); render();
+}
+
+// ── UPDATE STATUS ─────────────────────────────────────────────────────
+function updateStatus(id, val) {
+  const app = apps.find(a => a.id === id);
+  if (app) { app.status = val; save(); render(); }
+}
+
+// ── FILTER ────────────────────────────────────────────────────────────
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+// ── SORT ──────────────────────────────────────────────────────────────
+function sortBy(key) {
+  if (sortKey === key) sortDir *= -1;
+  else { sortKey = key; sortDir = 1; }
+  render();
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────
+function render() {
+  const search = document.getElementById('search').value.toLowerCase();
+
+  let filtered = apps
+    .filter(a => currentFilter === 'All' || a.status === currentFilter)
+    .filter(a =>
+      a.company.toLowerCase().includes(search) ||
+      a.role.toLowerCase().includes(search) ||
+      (a.notes || '').toLowerCase().includes(search)
+    );
+
+  // Sort
+  filtered.sort((a, b) => {
+    let av, bv;
+    if (sortKey === 'company')  { av = a.company; bv = b.company; return av.localeCompare(bv) * sortDir; }
+    if (sortKey === 'role')     { av = a.role;    bv = b.role;    return av.localeCompare(bv) * sortDir; }
+    if (sortKey === 'date')     { av = a.date;    bv = b.date;    return av.localeCompare(bv) * sortDir; }
+    if (sortKey === 'days')     { av = daysSince(a.date); bv = daysSince(b.date); return (av - bv) * sortDir; }
+    return 0;
+  });
+
+  const tbody  = document.getElementById('app-tbody');
+  const empty  = document.getElementById('empty-msg');
+
+  if (!filtered.length) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+  } else {
+    empty.style.display = 'none';
+    tbody.innerHTML = filtered.map((a, i) => {
+      const days  = daysSince(a.date);
+      const daysClass = days > 14 ? 'days-urgent' : '';
+      return `
+        <tr>
+          <td style="color:var(--muted);font-weight:500">${i + 1}</td>
+          <td><strong>${a.company}</strong></td>
+          <td>${a.role}</td>
+          <td>${a.date}</td>
+          <td>
+            <select class="status-select" onchange="updateStatus(${a.id},this.value)">
+              ${['Applied','Interview','Offer','Rejected','No response']
+                .map(s => `<option ${a.status===s?'selected':''}>${s}</option>`).join('')}
+            </select>
+            <span class="badge ${badgeClass[a.status]||'b-noresponse'}">${a.status}</span>
+          </td>
+          <td class="${daysClass}">${days}d ago</td>
+          <td><span class="note-text" title="${a.notes||''}">${a.notes||'—'}</span></td>
+          <td><button class="del-btn" onclick="deleteApp(${a.id})">Delete</button></td>
+        </tr>`;
+    }).join('');
+  }
+
+  // Stats
+  const total     = apps.length;
+  const interviews = apps.filter(a => a.status === 'Interview').length;
+  const offers    = apps.filter(a => a.status === 'Offer').length;
+  const rejected  = apps.filter(a => a.status === 'Rejected').length;
+  const rate      = total > 0 ? Math.round((interviews + offers) / total * 100) : 0;
+
+  document.getElementById('st-total').textContent     = total;
+  document.getElementById('st-interview').textContent = interviews;
+  document.getElementById('st-offer').textContent     = offers;
+  document.getElementById('st-rejected').textContent  = rejected;
+  document.getElementById('st-rate').textContent      = rate + '%';
+  document.getElementById('rate-bar').style.width     = rate + '%';
+  document.getElementById('sort-info').textContent    = filtered.length !== apps.length
+    ? `Showing ${filtered.length} of ${total}` : `${total} applications`;
+}
+
+// ── ENTER KEY ─────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.activeElement.closest('.form-card')) addApp();
+});
+
+render();
+</script>
+</body>
+</html>
